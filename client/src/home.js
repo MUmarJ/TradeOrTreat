@@ -5,7 +5,7 @@ import { Button, Grid, Paper, Typography } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { useAuth0 } from "@auth0/auth0-react";
 import pump from "../src/Assets/pump.png";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const theme = createTheme({
   palette: {
@@ -19,31 +19,89 @@ const theme = createTheme({
   },
 });
 
-export default function Home() {
+const postings = [
+  {
+    id: 1,
+    name: "Kit Kat",
+    imgSrc:
+      "https://www.germanshop24.com/images/thumbnails/1024/1024/detailed/16/F090001450.jpg",
+    amount: 10,
+  },
+  {
+    id: 2,
+    name: "Sour Patch",
+    imgSrc: "https://m.media-amazon.com/images/I/81SFEy-bzlL.jpg",
+    amount: 10,
+  },
+  {
+    id: 3,
+    name: "Snickers",
+    imgSrc:
+      "https://www.snickers.com/cdn-cgi/image/width=472,height=472,f=auto,quality=90/sites/g/files/fnmzdf616/files/migrate-product-files/dryeqrv2efldaaoyceat.png",
+    amount: 10,
+  },
+  {
+    id: 4,
+    name: "Twix",
+    imgSrc:
+      "https://www.twix.com/sites/g/files/fnmzdf236/files/migrate-product-files/pm57alsea7mspqhhgfuf.png",
+    amount: 10,
+  },
+  {
+    id: 5,
+    name: "Reese's Cups",
+    imgSrc:
+      "https://s7d2.scene7.com/is/image/hersheysassets/0_34000_00440_9_701_44000_136_Item_Front?fmt=png-alpha&hei=908",
+    amount: 10,
+  },
+  {
+    id: 6,
+    name: "Skittles",
+    imgSrc:
+      "https://www.skittles.com/sites/g/files/fnmzdf586/files/migrate-product-files/bam8afcev37jvz2mfpnk.png",
+    amount: 10,
+  },
+  {
+    id: 7,
+    name: "Starburst",
+    imgSrc:
+      "https://images.heb.com/is/image/HEBGrocery/000121398?fit=constrain,1&wid=800&hei=800&fmt=jpg&qlt=85,0&resMode=sharp2&op_usm=1.75,0.3,2,0",
+    amount: 10,
+  },
+  {
+    id: 8,
+    name: "Galaxy Chocolate",
+    imgSrc:
+      "https://cdn.trendhunterstatic.com/thumbs/galaxy-chocolatey-moments.jpeg?auto=webp",
+    amount: 10,
+  },
+];
+
+export default function App() {
   const { loginWithRedirect, logout, user, isLoading, isAuthenticated } =
     useAuth0();
 
-  const [postings, setPostings] = useState([]);
+  // const [postings, setPostings] = useState([]);
 
-  async function getPostings() {
-    const response = await fetch("http://localhost:5000/posting");
+  // async function getPostings() {
+  //   const response = await fetch("http://localhost:5000/posting");
 
-    if (!response.ok) {
-      window.alert(`An error occurred: ${response.statusText}`);
-      return;
-    }
+  //   if (!response.ok) {
+  //     window.alert(`An error occurred: ${response.statusText}`);
+  //     return;
+  //   }
 
-    const postingsRes = await response.json();
+  //   const postingsRes = await response.json();
 
-    if (!postingsRes) {
-      window.alert(`An error occurred: ${response.statusText}`);
-      return;
-    }
+  //   if (!postingsRes) {
+  //     window.alert(`An error occurred: ${response.statusText}`);
+  //     return;
+  //   }
 
-    setPostings(postingsRes);
-  }
+  //   setPostings(postingsRes);
+  // }
 
-  getPostings();
+  // getPostings();
 
   return (
     <ThemeProvider theme={theme}>
@@ -52,19 +110,11 @@ export default function Home() {
         style={{ backgroundColor: "#fcf7fc", overflow: "auto" }}
       >
         <Navbar style={{ width: "100%" }}></Navbar>
-        {/* <h2>Start editing to see some magic happen!</h2> */}
         {isAuthenticated ? (
           <Grid container spacing={6} rowSpacing={2} columns={12}>
-            {postings.map(({ offer, want, seller }) => (
+            {postings.map(({ name, imgSrc }) => (
               <Grid item xs={6}>
-                <CandyCard
-                  offer={offer}
-                  name={offer.name}
-                  img={offer.imgSrc}
-                  want={want}
-                  seller={seller}
-                  buyer={{ name: user.name, phone: user.phone_number }}
-                />
+                <CandyCard name={name} img={imgSrc} />
               </Grid>
             ))}
           </Grid>

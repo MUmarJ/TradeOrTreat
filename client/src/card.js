@@ -15,25 +15,24 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import GroupedButtons from "./GroupedButtons";
 import OfferModal from "./modal";
-import { useAuth0 } from "@auth0/auth0-react";
+
 const CARD_PROPERTY = {
   borderRadius: 3,
   boxShadow: 0,
 };
 
 export default function CandyCard(props) {
-  const { offer, want, buyer, seller } = props;
+  const { name, img } = props;
   const [count, setCount] = React.useState(0);
-  const [deal, setDeal] = React.useState(want.length ? want[0] : "");
+  const [offer, setOffer] = React.useState("");
 
   const handleChange = (event) => {
-    setDeal(event.target.value);
+    setOffer(event.target.value);
   };
-  const { loginWithRedirect, logout, user, isLoading, isAuthenticated } =
-    useAuth0();
+
   return (
     <Card className="card" sx={CARD_PROPERTY} style={{ margin: "10px" }}>
-      <CardMedia component="img" height="194" image={offer.imgSrc} />
+      <CardMedia component="img" height="194" image={img} />
       <CardContent sx={{ p: 3 }}>
         <Typography
           gutterBottom
@@ -41,7 +40,7 @@ export default function CandyCard(props) {
           sx={{ fontWeight: "bold" }}
           component="div"
         >
-          {offer.name}
+          {name}
         </Typography>
         <Typography className="info" variant="body1" color="text.secondary">
           Candy is good because it is often bright colors, which are attractive
@@ -54,18 +53,22 @@ export default function CandyCard(props) {
           <Select
             labelId="demo-simple-select-autowidth-label"
             id="demo-simple-select-autowidth"
-            value={deal}
+            value={offer}
             onChange={handleChange}
             label="Offer"
           >
-            {want.map((candy, k) => (
-              <MenuItem key={k} value={candy}>
-                {candy}
-              </MenuItem>
-            ))}
+            <MenuItem value="">
+              <em>Pick Candy</em>
+            </MenuItem>
+            <MenuItem value={"Snickers"}>Snickers</MenuItem>
+            <MenuItem value={"Twix"}>Twix</MenuItem>
+            <MenuItem value={"Kit kat"}>Kit kat</MenuItem>
+            <MenuItem value={"Reese's Cups"}>Reese's Cups</MenuItem>
+            <MenuItem value={"Skittles"}>Skittles</MenuItem>
+            <MenuItem value={"Starburst"}>Starburst</MenuItem>
           </Select>
           <GroupedButtons setCount={setCount} />
-          <OfferModal candy={deal} user={user} count={count} />
+          <OfferModal candy={offer} count={count} />
         </FormControl>
       </CardActions>
     </Card>
