@@ -45,4 +45,4 @@ cd to /server and run
 #### `npm i`
 #### `npm start`
 
-Backend is not needed if `local` branch is being used which has static data
+Backend is needed if `online` branch is being used which pulls data from MongoDB (Google Cloud)
