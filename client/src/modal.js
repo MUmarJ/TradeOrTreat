@@ -29,30 +29,27 @@ const style = {
 };
 
 export default function OfferModal(props) {
-  const data = props;
   const [open, setOpen] = React.useState(false);
   const [svg, setSvg] = React.useState("");
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const { user, candy } = props;
-  var temp = document.createElement("div");
-  var t2 = temp.firstChild;
-  //console.log(props)
+  const { candy } = props;
+
   const handleGenerate = () => {
     var hiddenInfo = {
       Date: new Date(),
       Generated_ID: 123,
       Candy: candy,
       Amount: props.count,
-      Buyer: user.name,
+      // Buyer: user.name,
     };
     hiddenInfo = JSON.stringify(hiddenInfo);
     var encrypt = btoa(hiddenInfo);
     console.log(encrypt);
     console.log("Time to decrypt!");
     var decrypted_string = atob(encrypt);
-    // console.log(JSON.parse(encrypt));
+
     QRcode.toDataURL("http://localhost:3000/thanks", function (err, url) {
       console.log(url);
       setSvg(url);
